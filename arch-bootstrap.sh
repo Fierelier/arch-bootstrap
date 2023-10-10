@@ -52,9 +52,10 @@ fetch_file() {
   local FILEPATH=$1
   shift
   if [[ -e "$FILEPATH" ]]; then
-    curl -L -z "$FILEPATH" -o "$FILEPATH" "$@"
+    return 0
   else
-    curl -L -o "$FILEPATH" "$@"
+    curl -L -C -o "$FILEPATH.tmp" "$@"
+    mv "$FILEPATH.tmp" "$FILEPATH"
   fi
 }
 
